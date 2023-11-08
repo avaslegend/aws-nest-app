@@ -1,0 +1,83 @@
+service: notification
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  logRetentionInDays: 5
+  region: us-east-1
+  memorySize: 512
+  stage: dev
+  # stackTags:
+  #   client: blushbar
+  #   owner: brandlive_co
+  #   contact: svazquez@infracommerce.lat
+  #   project: blushbar-pos
+  #   environment: ${opt:stage, self:provider.stage}
+  #   country: mx
+  environment:
+    snsARN: set-arn
+    RECIPIENT_ALERT: ${self:custom.recipientAlert}
+    SENDER_ALERT: ${self:custom.senderAlert}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+      Resource: 
+        - arn:aws:ses:${self:provider.region}:${aws:accountId}:identity/*
+        #- arn:aws:ses:us-west-2:091063331160:identity/*
+
+
+  # deploymentPrefix: blushbar/mx
+  # deploymentBucket:
+  #   name: infracommerce-configs-serverless
+  #   tags: # Tags that will be added to each of the deployment resources
+  #     client: blushbar
+  #     owner: brandlive_co
+  #     contact: svazquez@infracommerce.lat
+  #     project: blushbar-pos-notification
+  #     country: mx
+  #     environment: ${opt:stage, self:provider.stage}
+
+functions:
+  user_scan_log:
+    handler: alert_handler.user_scan_log
+    description: Send an email based an exception when inventory process throw an error for SAVA project
+    events:
+      - cloudwatchLog: 
+          logGroup: '/aws/lambda/users-${opt:stage, self:provider.stage}-createProfile'
+          filter: 'User_Source_Error'
+
+  profile_scan_log:
+    handler: alert_handler.profile_scan_log
+    description: Send an email based an exception when price process throw an error for SAVA project
+    events:
+      - cloudwatchLog:
+          logGroup: '/aws/lambda/users-${opt:stage, self:provider.stage}-getUser'
+          filter: 'Profile_Source_Error'
+
+
+
+custom:
+  recipientAlert: 'svazquez@infracommerce.lat'
+  senderAlert: 'svazquez@infracommerce.lat'
+
+# resources:
+#   Resources:
+#     EmailNotificationTemplate:
+#       Type: AWS::SES::Template 
+#       Properties: 
+#         Template: 
+#           TemplateName: email-notification-${opt:stage, self:provider.stage}-blushbar-api
+#           SubjectPart: "Default subject part"
+#           HtmlPart: "Default body html part"
+          #TextPart: "Default body text part" 
+
+  # Template:
+  #   Type: 'AWS::SES::Template'
+  #   Properties:
+  #     Template:
+  #       TemplateName: !Ref TemplateName
+  #       SubjectPart: !Ref SubjectPart
+  #       TextPart: !Ref TextPart
+  #       HtmlPart: !Ref HtmlPart

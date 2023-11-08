@@ -1,0 +1,7 @@
+services:
+  items:
+    path: apps/items
+  users:
+    path: apps
+  alerts:
+    path: notification

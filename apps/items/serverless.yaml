@@ -1,0 +1,101 @@
+service: items
+
+plugins:
+  - serverless-offline
+
+custom:
+    serverless-offline:
+        httpPort: 3006
+        lambdaPort: 3008
+
+functions:
+  createItem:
+    handler: dist/main.createItem
+    events:
+      - http:
+          method: POST
+          path: /items
+  getItem:
+    handler: dist/main.getItem
+    events:
+      - http:
+          method: GET
+          path: /items/{id}
+          request: 
+            parameters: 
+              paths: 
+                id: true
+  getItems:
+    handler: dist/main.getItems
+    events:
+      - http:
+          method: GET
+          path: /items
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: nodejs16.x
+  stage: dev
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan  
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: 
+        Fn::Join:
+          - ''
+          - - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/"
+            - ${self:provider.environment.DYNAMODB_TABLE}
+
+resources:
+  Resources:
+    ItemsTable: 
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+
+package:
+  exclude:
+    - ../../node_modules/**
+    - ./src/**
+    - ./test/**
+  include:
+    - '../../node_modules/@nestjs/common/**'
+    - '../../node_modules/@nestjs/core/**'
+    - '../../node_modules/@nestjs/schematics/**'
+    - '../../node_modules/@nestjs/testing/**'
+    - '../../node_modules/tslib/**'
+    - '../../node_modules/reflect-metadata/**'
+    - '../../node_modules/uid/**'
+    - '../../node_modules/rxjs/**'
+    - '../../node_modules/iterare/**'
+    - '../../node_modules/@nuxtjs/**'
+    - '../../node_modules/fast-safe-stringify/**'
+    - '../../node_modules/path-to-regexp/**'
+    - '../../node_modules/cache-manager/**'
+    - '../../node_modules/class-transformer/**'
+    - '../../node_modules/class-validator/**'
+    - '../../node_modules/cache-manager/**'
+    - '../../node_modules/@angular-devkit/**'
+    - '../../node_modules/jsonc-parser/**'
+    - '../../node_modules/pluralize/**'
+    - '../../node_modules/body-parser/**'
+    - '../../node_modules/cors/**'
+    - '../../node_modules/express/**'
+    - '../../node_modules/multer/**'
+    - '../../node_modules/@vendia/**'

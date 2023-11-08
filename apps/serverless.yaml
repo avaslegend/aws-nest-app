@@ -1,0 +1,23 @@
+service: users
+
+custom: ${file(./serverless-common/custom.yml)}
+
+constructs:
+  ${file(./serverless-common/constructs.yml)}
+
+
+provider:
+  ${file(./serverless-common/provider.yml)}
+
+plugins:
+  ${file(./serverless-common/plugins.yml)}
+
+
+functions:
+  ${file(./serverless-common/functions.yml)}
+
+resources:
+  ${file(./serverless-common/resources.yml)}
+
+package:
+  ${file(./serverless-common/package.yml)}

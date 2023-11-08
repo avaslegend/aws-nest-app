@@ -1,0 +1,64 @@
+# exclude:
+#   - ../../node_modules/**
+#   - ./src/**
+#   - ./test/**
+# include:
+#   - '../../node_modules/@nestjs/common/**'
+#   - '../../node_modules/@nestjs/core/**'
+#   - '../../node_modules/@nestjs/schematics/**'
+#   - '../../node_modules/@nestjs/testing/**'
+#   - '../../node_modules/tslib/**'
+#   - '../../node_modules/reflect-metadata/**'
+#   - '../../node_modules/uid/**'
+#   - '../../node_modules/rxjs/**'
+#   - '../../node_modules/iterare/**'
+#   - '../../node_modules/@nuxtjs/**'
+#   - '../../node_modules/fast-safe-stringify/**'
+#   - '../../node_modules/path-to-regexp/**'
+#   - '../../node_modules/cache-manager/**'
+#   - '../../node_modules/class-transformer/**'
+#   - '../../node_modules/class-validator/**'
+#   - '../../node_modules/cache-manager/**'
+#   - '../../node_modules/@angular-devkit/**'
+#   - '../../node_modules/jsonc-parser/**'
+#   - '../../node_modules/pluralize/**'
+#   - '../../node_modules/body-parser/**'
+#   - '../../node_modules/cors/**'
+#   - '../../node_modules/express/**'
+#   - '../../node_modules/multer/**'
+#   - '../../node_modules/@vendia/**'
+
+exclude:
+  - ../node_modules/**
+  - ./src/**
+  - ./test/**
+include:
+  - '../node_modules/@nestjs/common/**'
+  - '../node_modules/@nestjs/core/**'
+  - '../node_modules/@nestjs/schematics/**'
+  - '../node_modules/@nestjs/testing/**'
+  - '../node_modules/tslib/**'
+  - '../node_modules/reflect-metadata/**'
+  - '../node_modules/uid/**'
+  - '../node_modules/rxjs/**'
+  - '../node_modules/iterare/**'
+  - '../node_modules/@nuxtjs/**'
+  - '../node_modules/fast-safe-stringify/**'
+  - '../node_modules/path-to-regexp/**'
+  - '../node_modules/cache-manager/**'
+  - '../node_modules/class-transformer/**'
+  - '../node_modules/class-validator/**'
+  - '../node_modules/cache-manager/**'
+  - '../node_modules/@angular-devkit/**'
+  - '../node_modules/jsonc-parser/**'
+  - '../node_modules/pluralize/**'
+  - '../node_modules/body-parser/**'
+  - '../node_modules/cors/**'
+  - '../node_modules/express/**'
+  - '../node_modules/multer/**'
+  - '../node_modules/@vendia/**'
+
+  - '../node_modules/@types/uuid/**'
+  - '../node_modules/uuid/**'
+  - '../node_modules/validator/**'
+  - '../node_modules/libphonenumber-js/**'

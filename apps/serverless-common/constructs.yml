@@ -1,0 +1,3 @@
+category-queue: ${file(./category/serverless.yml):queues.category}
+
+

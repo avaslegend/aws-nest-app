@@ -1,0 +1,16 @@
+queues:
+  category:
+    type: queue
+    worker:
+      handler: category/dist/main.getCategory
+      iamRoleStatements:
+        - Effect: Allow
+          Action:
+            - sqs:SendMessage
+          Resource:
+            - ${construct:category-queue.queueArn}
+            - ${construct:category-queue.dlqArn}
+      environment:
+        SQS_CATEGORY_QUEUE_URL: ${construct:category-queue.queueUrl}
+        SQS_CATEGORY_DQL_QUEUE_URL: ${construct:category-queue.dlqUrl}
+        MAX_ATTEMPTS: 5

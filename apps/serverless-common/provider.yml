@@ -1,0 +1,17 @@
+name: aws
+region: us-east-1
+runtime: nodejs16.x
+stage: dev
+environment: ${file(./config-env.js)}
+iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - dynamodb:Query
+      - dynamodb:Scan  
+      - dynamodb:GetItem
+      - dynamodb:UpdateItem
+    Resource: 
+      Fn::Join:
+        - ''
+        - - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/"
+          - ${self:provider.environment.DYNAMODB_TABLE}

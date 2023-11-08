@@ -1,0 +1,13 @@
+allowPutUser:
+  Effect: Allow
+  Action:
+    - dynamodb:PutItem
+  Resource:
+    - { "Fn::GetAtt": [UsersTable, Arn] }
+
+allowGetUser:
+  Effect: Allow
+  Action:
+    - dynamodb:GetItem
+  Resource:
+    - { "Fn::GetAtt": [UsersTable, Arn] }

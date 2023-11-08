@@ -1,0 +1,30 @@
+lambda:
+  createProfile:
+    handler: profile/dist/profile/src/main.createProfile
+    events:
+      - http:
+          method: POST
+          path: /profile
+    iamRoleStatements:
+      - ${file(./serverless-common/permissions.yml):allowPutUser}
+
+  getProfile:
+    # handler: profile/dist/main.getProfile
+    handler: profile/dist/profile/src/main.getProfile
+    events:
+      - http:
+          method: GET
+          path: /profile/{id}
+          request: 
+            parameters: 
+              paths: 
+                id: true
+    iamRoleStatements:
+      - ${file(./serverless-common/permissions.yml):allowGetUser}
+      - Effect: Allow
+        Action:
+          - sqs:SendMessage
+        Resource:
+          - arn:aws:sqs:${self:provider.region}:${aws:accountId}:${self:service}-${self:custom.currentStage}-category-queue
+    environment:
+      SQS_CATEGORY_QUEUE_URL: ${construct:category-queue.queueUrl}

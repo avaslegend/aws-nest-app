@@ -1,0 +1,7 @@
+getUser: ${file(./users/serverless.yaml):lambda.getUser}
+
+getUsers: ${file(./users/serverless.yaml):lambda.getUsers}
+
+createProfile: ${file(profile/serverless.yml):lambda.createProfile}
+
+getProfile: ${file(profile/serverless.yml):lambda.getProfile}

@@ -1,0 +1,17 @@
+lambda:
+  getUser:
+    handler: users/dist/main.getUser
+    events:
+      - http:
+          method: GET
+          path: /users/{id}
+          request: 
+            parameters: 
+              paths: 
+                id: true
+  getUsers:
+    handler: users/dist/main.getUsers
+    events:
+      - http:
+          method: GET
+          path: /users

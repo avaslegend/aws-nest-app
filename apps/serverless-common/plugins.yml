@@ -1,0 +1,4 @@
+- serverless-offline
+- serverless-iam-roles-per-function
+- serverless-lift
+# - serverless-dotenv-plugin
